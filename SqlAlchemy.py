@@ -2,7 +2,7 @@ import pickle
 from sqlalchemy import MetaData, Table, text,insert,create_engine,update
 import pandas as pd
 import pymysql
-df = pd.read_csv("web_interface_song\\static\\music_list - Sheet1.csv")
+df = pd.read_csv("web_interface_song\\static\\music_list_Sheet1.csv")
 
 # get connection from the database
 engine = create_engine("mysql+pymysql://tjsrgq9tpyifphpvw9e7:pscale_pw_13xbemzh4WopcLWcJ3gHfaJtEuVPvB8LwkkRQYabeyp@aws.connect.psdb.cloud/db?charset=utf8mb4", connect_args = {
