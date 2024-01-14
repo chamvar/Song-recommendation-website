@@ -6,7 +6,7 @@ import time
 from apyori import apriori
 
 
-dataset = pd.read_csv("freelancer\\web_interface_song\\static\\r_songs.csv", header=None) #we are specifying there is no header
+dataset = pd.read_csv("web_interface_song\\static\\r_songs.csv", header=None) #we are specifying there is no header
 transactions = []
 for i in range(100):
     transactions.append([str(dataset.values[i,j]) for j in range(0,15)])
@@ -33,6 +33,6 @@ for i in song_pairs:
 
 len(song_pairs)  
 
-file2 = open("freelancer\\web_interface_song\\static\\song_pairs.pkl",'wb')
+file2 = open("web_interface_song\\static\\song_pairs.pkl",'wb')
 pickle.dump(results,file2)
 file2.close()
