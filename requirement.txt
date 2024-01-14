@@ -1,0 +1,11 @@
+flask
+SqlAlchemy
+speedtest
+psutil
+numpy
+pandas
+apyori
+matplotlib
+sklearn
+pymysql
+Gunicorn

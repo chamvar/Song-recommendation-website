@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script>
+        // Measure page load time
+        var pageLoadStartTime = performance.now();
+    
+        // Measure latency (ping) to your server
+        var pingStart = new Date().getTime();
+        
+        // Replace 'your_server_address' with your server's address
+        fetch('http://127.0.0.1:5000/')
+            .then(response => {
+                var pingEnd = new Date().getTime();
+                var latency = pingEnd - pingStart;
+                console.log('Latency (ms): ' + latency);
+    
+                // Calculate and log page load time
+                var pageLoadEndTime = performance.now();
+                var pageLoadTime = pageLoadEndTime - pageLoadStartTime;
+                console.log('Page Load Time (ms): ' + pageLoadTime);
+    
+                // Send this data to the server for storage or analysis
+                fetch('/log_metrics', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ latency: latency, pageLoadTime: pageLoadTime }),
+                })
+            })
+            .catch(error => {
+                console.error('Error measuring latency: ' + error);
+            });
+    </script>
+    
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scrollable-list {
+            max-height: 200px; /* Adjust the height as needed */
+            overflow-y: scroll;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .top {
+            flex: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left {
+            flex: 50%;
+            background-color: #fff;
+            /*background-image: url("https://images.unsplash.com/photo-1499415479124-43c32433a620?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bXVzaWN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");*/
+           /* background-size: cover;
+            background-position: center;*/
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 30%; 
+            height: 85%; 
+            margin-right: 2%;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+           /* clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);*/
+        }
+
+        .right {
+           flex: 50%;
+            background-color: #fff;
+            display: flex;
+          align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            justify-content: center;
+           width: 30%; 
+            height: 85%; 
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .song-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .song-list li {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .bottom {
+            flex: 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bottomright, .bottomleft {
+            flex: 50%;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            justify-content: center;
+            background-color: #fff;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .bottomleft {
+            /*clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 0% 100%);*/
+            margin-right: 2%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .bottomright {
+           /* clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);*/
+        }
+
+        .left audio {
+            width: 80%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            border-radius: 10px;
+        }
+
+        .scrollable-list {
+            overflow-y: auto;
+            overflow-x: hidden; /* Optional: depending on your layout */
+            -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS devices */
+            max-height: 200px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .action-buttons button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Custom styling for buttons */
+        button#fav {
+            margin-top: 10px;
+            background-color: #f1c40f;
+        }
+
+        button#play {
+            margin-top: 10px;
+            background-color: #27ae60;
+        }
+
+        button#skip {
+            margin-top: 10px;
+            background-color: #e74c3c;
+        }
+
+        /* Custom styling for radio buttons */
+        .song-list input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Styling for play buttons */
+        .play-button {
+            background-color: #27ae60;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .play-button:hover {
+            background-color: #1e984e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Music Recommendation System</h1>
+
+        <div class="top">
+            <div class="left">
+                <p name="songg" value="{{song}}">{{song}}</p>
+                <iframe width="50%" height="100" scrolling="no" 
+                frameborder="no" allow="autoplay" 
+                src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/{{song_id}}&color=%230066cc&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=false&show_artwork=false"></iframe>
+                <div class="action-buttons">
+                    <form action = "/fav/{{uname}}" method = "post">
+                        <button id="fav" name = "fav" value="{{song}}">Favorite</button>
+                    </form>
+                    <form action = "/skip/{{uname}}" method = "post">
+                        <button id="skip" name="songg" value="{{song}}">Skip</button>
+                    </form>
+                </div>
+            </div>
+            <div class="right">
+                <h2>Favorites</h2>
+                <form action="/favorites/{{uname}}" method = "post">
+                    <div class="scrollable-list">
+                    <ul class="song-list">
+                        {% for index in range(favs|length) %}
+                            <li>
+                                <input type="radio" name="favorite" id="fav{{ index + 1 }}" value="{{ favs[index] }}">
+                                <label for="fav{{ index + 1 }}">{{ favs[index] }}</label>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                    <button class="play-button">Play</button>
+                </form>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="bottomleft">
+                <h2>Music List</h2>
+                <form action = "/music_list/{{uname}}" method = "post">
+                    <ul class="song-list">
+                        <li>
+                            <input type="radio" name="music" id="musicA" value = "{{lis[0]}}">
+                            <label for="musicA">{{lis[0]}}</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="music" id="musicB" value = "{{lis[1]}}">
+                            <label for="musicB">{{lis[1]}}</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="music" id="musicC" value = "{{lis[2]}}">
+                            <label for="musicC">{{lis[2]}}</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="music" id="musicD" value = "{{lis[3]}}">
+                            <label for="musicD">{{lis[3]}}</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="music" id="musicE" value = "{{lis[4]}}">
+                            <label for="musicE">{{lis[4]}}</label>
+                        </li>
+                    </ul>
+                    <button class="play-button">Play</button>
+                </form>
+            </div>
+            <div class="bottomright">
+                <h2>Recommended List</h2>
+                <form action="/recommend/{{uname}}" method="post">
+                    <ul class="song-list">
+                        <li>
+                            <input type="radio" name="recommend" id="recommended1" value="{{ rec[0] }}">
+                            <label for="recommended1">{{ rec[0] }}</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="recommend" id="recommended2" value="{{ rec[1] }}">
+                            <label for="recommended2">{{ rec[1] }}</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="recommend" id="recommended3" value="{{ rec[2] }}">
+                            <label for="recommended3">{{ rec[2] }}</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="recommend" id="recommended4" value="{{ rec[3] }}">
+                            <label for="recommended4">{{ rec[3] }}</label>
+                        </li>
+                        <li>
+                            <input type="radio" name="recommend" id="recommended5" value="{{ rec[4] }}">
+                            <label for="recommended5">{{ rec[4] }}</label>
+                        </li>
+                    </ul>
+                    <button class="play-button">Play</button>
+                </form>
+            </div>            
+        </div>
+    </div>
+</body>
+</html>

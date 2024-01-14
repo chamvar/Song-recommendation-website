@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='player.css') }}">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var player;
+        function onPlayerReady(event) {
+            document.getElementById(ui.play).addEventListener('click', togglePlay);
+            timeupdater = setInterval(initProgressBar, 100);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.ENDED) {
+                document.getElementById(ui.play).classList.remove('pause');
+                document.getElementById(ui.percentage).style.width = 0;
+                document.getElementById(ui.currentTime).innerHTML = '00:00';
+                player.seekTo(0, true);
+            }
+        }
+
+        let ui = {
+            play: 'playAudio',
+            audio: 'audio',
+            percentage: 'percentage',
+            seekObj: 'seekObj',
+            currentTime: 'currentTime'
+        };
+
+        function togglePlay() {
+            if (player.getPlayerState() === 1) {
+                player.pauseVideo();
+                document.getElementById(ui.play).classList.remove('pause');
+            } else {
+                player.playVideo();
+                document.getElementById(ui.play).classList.add('pause');
+            }
+        }
+                
+        function calculatePercentPlayed() {
+            let percentage = (player.getCurrentTime() / player.getDuration()).toFixed(2) * 100;
+            document.getElementById(ui.percentage).style.width = `${percentage}%`;
+        }
+
+        function calculateCurrentValue(currentTime) {
+            const currentMinute = parseInt(currentTime / 60) % 60;
+            const currentSecondsLong = currentTime % 60;
+            const currentSeconds = currentSecondsLong.toFixed();
+            const currentTimeFormatted = `${currentMinute < 10 ? `0${currentMinute}` : currentMinute}:${
+            currentSeconds < 10 ? `0${currentSeconds}` : currentSeconds
+            }`;
+            
+            return currentTimeFormatted;
+        }
+
+        function initProgressBar() {
+            const currentTime = calculateCurrentValue(player.getCurrentTime());
+            document.getElementById(ui.currentTime).innerHTML = currentTime;
+            document.getElementById(ui.seekObj).addEventListener('click', seek);
+
+            function seek(e) {
+                const percent = e.offsetX / this.offsetWidth;
+                player.seekTo(percent * player.getDuration());
+            }
+            
+            calculatePercentPlayed();
+        }
+    </script>
+    <script>
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100',
+                width: '300',
+                videoId: "OlvyNg0LNYE",
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+            console.log(dataFromPython);
+        }
+    </script>
+</head>
+<body>
+    <h1>Music Recommendation</h1>
+    <h3>Tune your own song</h3>
+    <!--Youtube-->
+    <div id="player" style="display: none; visibility: hidden;"></div>
+        <p class="songName">Happy days</p>
+    <div class="audio-player">
+       <!--<p class="name" style="font-size: 20px;">song</p>-->
+        <div class="player-controls">
+            <div id="radioIcon"></div>
+            <button id="playAudio"></button>
+            <div id="seekObjContainer">
+                <div id="seekObj">
+                    <div id="percentage"></div>
+                </div>
+            </div>
+            <p><small id="currentTime">00:00</small></p>
+        </div>
+    </div>
+    <form action = "\index">
+        <input  class="fav" style="position: absolute; margin-left:1030px;top:26%;font-size: 20px;padding: 5px 10px 5px 10px; border-radius: 15px;
+        cursor: pointer;height:-10%;"  type="submit" value="Fav">
+    </form>
+    
+    
+<!--To suggest favourite songs-->
+
+<div class="flex-container">
+    <div class="song">
+        <form action="\play_song">
+        <p style="float: left;">{{lis[0]}}</p>
+        <input style="float: right;" type="submit" placeholder="play" value={{id[2]}}>
+        </form>
+
+    </div>
+
+    <div class="song">
+        <form action="\play_song">
+            <p style="float: left;">{{lis[1]}}</p>
+            <input style="float: right;" type="submit" placeholder="play" value={{id[1]}}>
+
+        </form>
+
+    </div>
+
+    <div class="song">
+        <form action="\play_song">
+            <p style="float: left;">{{lis[2]}}</p>
+            <input style="float: right;" type="submit" placeholder="play" value={{id[2]}}>
+
+        </form>
+
+    </div>  
+
+    <div class="song">
+        <form action="\play_song">
+            <p style="float: left;">{{lis[3]}}</p>
+            <input style="float: right;" type="submit" placeholder="play" value={{id[3]}}>
+
+        </form>
+
+    </div>
+
+    <div class="song">
+        <form action="\play_song">
+            <p style="float: left;">{{lis[4]}}</p>
+            <input style="float: right;" type="submit" placeholder="play" value={{id[4]}}>
+        </form>
+
+    </div>
+
+  </div>
+  
+
+</body>
+</html>
