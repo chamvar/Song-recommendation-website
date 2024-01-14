@@ -4,9 +4,9 @@ import numpy as np
 import re
 
 
-df = pd.read_csv("freelancer\\web_interface_song\\static\\df.csv")
+df = pd.read_csv("web_interface_song\\static\\df.csv")
 
-file = open("C:\\Users\\vramt\\Desktop\\Programming\\freelancer\\web_interface_song\\static\\similarity.pkl",'rb');
+file = open("web_interface_song\\static\\similarity.pkl",'rb');
 similarity = pickle.load(file)
 file.close()
 
