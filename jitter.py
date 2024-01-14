@@ -5,7 +5,7 @@ import time
 from apyori import apriori
 import math
 
-dataset = pd.read_csv("freelancer\\web_interface_song\\static\\r_songs.csv", header=None) #we are specifying there is no header
+dataset = pd.read_csv("web_interface_song\\static\\r_songs.csv", header=None) #we are specifying there is no header
 transactions = []
 for i in range(100):
     transactions.append([str(dataset.values[i,j]) for j in range(0,15)])
