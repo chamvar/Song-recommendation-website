@@ -3,15 +3,15 @@ from sqlalchemy import MetaData, Table, text,insert,create_engine,update
 # from Get_Url import get_link
 import pandas as pd
 import pymysql
-df = pd.read_csv("freelancer\\web_interface_song\\static\\music_list - Sheet1.csv")
+df = pd.read_csv("web_interface_song\\static\\music_list - Sheet1.csv")
 
 engine = create_engine("mysql+pymysql://root:sai12@127.0.0.1/DB?charset=utf8mb4")
 
-file2 = open("freelancer\\web_interface_song\\static\\kmeans.pkl",'rb')
+file2 = open("web_interface_song\\static\\kmeans.pkl",'rb')
 kmeans = pickle.load(file2)
 file2.close()
 
-file2 = open("freelancer\\web_interface_song\\static\\mlb.pkl",'rb')
+file2 = open("web_interface_song\\static\\mlb.pkl",'rb')
 mlb = pickle.load(file2)
 file2.close()
 
