@@ -6,6 +6,6 @@ numpy
 pandas
 apyori
 matplotlib
-sklearn
+scikit-learn
 pymysql
 Gunicorn
