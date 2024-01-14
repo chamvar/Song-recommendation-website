@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import MultiLabelBinarizer
 
-dataset = pd.read_csv("freelancer\\web_interface_song\\static\\r_songs.csv", header=None)
+dataset = pd.read_csv("web_interface_song\\static\\r_songs.csv", header=None)
 X = dataset.iloc[:, 1:].values
 
 X
