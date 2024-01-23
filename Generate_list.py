@@ -2,7 +2,7 @@ from SqlAlchemy import get_songs
 import random
 import pickle
 
-file2 = open("freelancer\\web_interface_song\\static\\song_pairs.pkl",'rb')
+file2 = open("web_interface_song\\static\\song_pairs.pkl",'rb')
 results = pickle.load(file2)
 file2.close()
 
